@@ -6,11 +6,9 @@
 </head>
 <body>
     <h1>Register Account</h1>
-    <form action="register" method="post">
+    <form action="/register/" method="post">
         {% csrf_token %}
-        Email:<input type="email" name="email"><br>
-        Username:<input type="text" name="username"><br>
-        Password:<input type="password" name="password"><br>
+        {{ form.as_p }}
         <input type="submit" value="Register">
     </form>
 </body>
