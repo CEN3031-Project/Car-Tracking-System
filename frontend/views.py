@@ -17,9 +17,9 @@ def register(request):
         if form.is_valid():
             user = form.save()
             UserProfile.objects.create(user=user)
-        # https://docs.djangoproject.com/en/5.0/ref/contrib/messages/
-        messages.success(request, "User profile successfully created.")
-        return redirect('home')
+            # https://docs.djangoproject.com/en/5.0/ref/contrib/messages/
+            messages.success(request, "User profile successfully created.")
+            return redirect('home')
     # If the request is GET, then display the form
     else:
         form = UserCreationForm()
