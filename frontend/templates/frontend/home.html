@@ -10,12 +10,18 @@
         <form action="/logout/" method="get">
             <input type="submit" value="Sign Out">
         </form>
+        <form action="/cars/" method="get">
+            <input type="submit" value="Cars">
+        </form>
     {% else %}
          <form action="/register/" method="get">
              <input type="submit" value="Sign Up">
         </form>
         <form action="/login/" method="get">
             <input type="submit" value="Sign In">
+        </form>
+        <form action="/cars/" method="get">
+            <input type="submit" value="Cars">
         </form>
         {% endif %}
     </div>
