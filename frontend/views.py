@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import ClientAccount
+from .models import Car
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import login
@@ -66,3 +67,13 @@ def user_login(request):
 def user_logout(request):
     logout(request)
     return redirect('home')
+
+def car_list(request):
+    car_list = Car.objects.all()
+    return render(request, 'frontend/car_list.html', {'car_list': car_list})
+
+def update_availability(request, car_id):
+    car = Car.objects.get(pk=car_id)
+    car.availability = not car.availability
+    car.save()
+    return redirect('/cars/')
