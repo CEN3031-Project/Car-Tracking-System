@@ -9,7 +9,7 @@ class ClientAccount(models.Model):
     def __str__(self):
         return self.user.username
 
-
+      
 class Car(models.Model):
     model = models.CharField(max_length=100)
     type = models.CharField(max_length=100)
@@ -33,7 +33,7 @@ class Reservation(models.Model):
     def __str__(self):
         return str(self.client) + ' ' + str(self.car)
 
-
+      
 class EmployeeAccount(models.Model):
     username = models.CharField(max_length=20)
     password = models.CharField(max_length=20)
