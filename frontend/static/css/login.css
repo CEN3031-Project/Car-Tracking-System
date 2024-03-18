@@ -1,0 +1,49 @@
+* {
+    box-sizing: border-box;
+}
+
+p {
+    font-size: 18px;
+}
+
+.login_modal {
+    z-index: 160;
+    background-color: #fff;
+    border: 1px solid #e3e3e3;
+    border-radius: 16px;
+    box-sizing: border-box;
+    font-family: Source Sans Pro;
+    width: 40%;
+    margin: auto;
+    padding: 48px;
+    position: relative;
+    text-align: left;
+    top: 20px;
+}
+
+.username_input_wrapper .password_input_wrapper {
+    display: flex;
+    flex-direction: column;
+    right: 30px;
+    top: 30px;
+    margin: 100px;
+}
+
+.input_field {
+    width: 100%;
+    font-size: 16px;
+    padding: 10px;
+    border: solid;
+    border-radius: 6px;
+    border-width: 1px;
+}
+
+.login_button {
+    width: 100%;
+    font-size: 16px;
+    color: #e3e3e3;
+    padding: 10px;
+    margin-top: 30px;
+    background-color: rgb(68, 68, 255);
+    border-radius: 6px;
+}
