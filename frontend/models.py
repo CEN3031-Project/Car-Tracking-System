@@ -17,6 +17,7 @@ class Car(models.Model):
     cost_per_day = models.FloatField()
     cost_per_mile = models.FloatField()
     location = models.CharField(max_length=100)
+    availability = models.BooleanField(default=True)
 
     def __str__(self):
         return self.model
@@ -27,7 +28,7 @@ class Reservation(models.Model):
     client = models.ForeignKey(ClientAccount, on_delete=models.CASCADE)
     rental_date = models.DateField()
     return_date = models.DateField()
-    car = models.ManyToManyField(Car)
+    # car = models.ManyToManyField(Car)
 
     def __str__(self):
         return self.client + ' ' + self.car
