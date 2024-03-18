@@ -89,6 +89,8 @@ def make_reservation(request, id):
             reservation.car = car
             reservation.save()
             messages.success(request, "Reservation successfully made.")
+            car.availability = not car.availability
+            car.save()
             return redirect('home')
     else:
         form = ReservationForm(initial={'car': car})
@@ -98,10 +100,3 @@ def make_reservation(request, id):
 def car_list(request):
     car_list = Car.objects.all()
     return render(request, 'frontend/car_list.html', {'car_list': car_list})
-
-
-def update_availability(request, car_id):
-    car = Car.objects.get(pk=car_id)
-    car.availability = not car.availability
-    car.save()
-    return redirect('/cars/')

@@ -6,7 +6,7 @@
 </head>
 <body>
     <h1>Make a Reservation</h1>
-    <<form action="{% url 'reservation' id=car.id %}" method="post">
+    <form action="{% url 'reservation' car.id %}" method="post">
         {% csrf_token %}
         {{ form.as_p }}
         <input type="submit" value="Submit Reservation">

@@ -12,7 +12,7 @@
     <li>Availability: {{ car.availability }}</li>
 
     {% if car.availability %}
-    <form action="{% url 'update_availability' car.id %}" method="post">
+    <form action="{% url 'reservation' car.id %}" method="post">
         {% csrf_token %}
         <input type="submit" value="Rent Me">
     </form>

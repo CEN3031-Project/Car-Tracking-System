@@ -31,7 +31,7 @@ class Reservation(models.Model):
     # car = models.ManyToManyField(Car)
 
     def __str__(self):
-        return self.client + ' ' + self.car
+        return str(self.client) + ' ' + str(self.car)
 
 
 class EmployeeAccount(models.Model):
