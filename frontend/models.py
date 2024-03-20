@@ -28,10 +28,10 @@ class Reservation(models.Model):
     client = models.ForeignKey(ClientAccount, on_delete=models.CASCADE)
     rental_date = models.DateField()
     return_date = models.DateField()
-    car = models.ManyToManyField(Car)
+    # car = models.ManyToManyField(Car)
 
     def __str__(self):
-        return self.client + ' ' + self.car
+        return str(self.client) + ' ' + str(self.car)
 
       
 class EmployeeAccount(models.Model):

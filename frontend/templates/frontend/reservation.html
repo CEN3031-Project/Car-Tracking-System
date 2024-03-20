@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Make a Reservation</title>
+</head>
+<body>
+    <h1>Make a Reservation</h1>
+    <form action="{% url 'reservation' car.id %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Submit Reservation">
+    </form>
+</body>
+</html>

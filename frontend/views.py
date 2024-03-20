@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import ClientAccount
 from .models import Car
+from .models import Reservation
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import login
@@ -24,6 +25,14 @@ class UserRegisterForm(UserCreationForm):
     class Meta:
         model = User
         fields = ("username", "email", "first_name", "last_name", "password1", "password2")
+
+
+class ReservationForm(forms.ModelForm):
+    rental_date = forms.DateTimeField(required=True)
+    return_date = forms.DateTimeField(required=True)
+    class Meta:
+        model = Reservation
+        fields = ['car', 'client', 'rental_date', 'return_date']
 
 
 # Handle user registration with the user register form
@@ -68,12 +77,26 @@ def user_logout(request):
     logout(request)
     return redirect('home')
 
+
+def make_reservation(request, id):
+    car = Car.objects.get(pk=id)
+    client_account, created = ClientAccount.objects.get_or_create(user=request.user)
+    if request.method == 'POST':
+        form = ReservationForm(request.POST)
+        if form.is_valid():
+            reservation = form.save(commit=False)
+            reservation.client = client_account
+            reservation.car = car
+            reservation.save()
+            messages.success(request, "Reservation successfully made.")
+            car.availability = not car.availability
+            car.save()
+            return redirect('home')
+    else:
+        form = ReservationForm(initial={'car': car})
+    return render(request, 'frontend/reservation.html', {'form': form, 'car': car})
+
+
 def car_list(request):
     car_list = Car.objects.all()
     return render(request, 'frontend/car_list.html', {'car_list': car_list})
-
-def update_availability(request, car_id):
-    car = Car.objects.get(pk=car_id)
-    car.availability = not car.availability
-    car.save()
-    return redirect('/cars/')
