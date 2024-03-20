@@ -1,0 +1,31 @@
+{% block content %}
+    <h1>Cars</h1>
+
+{% for car in car_list %}
+    <strong>{{ car }}</strong>
+    <ul>
+    <li>Type: {{ car.type }}</li>
+    <li>Mileage: {{ car.mileage }} miles</li>
+    <li>Cost per day: ${{ car.cost_per_day }}</li>
+    <li>Cost per mile: ${{ car.cost_per_mile }}</li>
+    <li>Car location: {{ car.location }}</li>
+    <li>Availability: {{ car.availability }}</li>
+
+    {% if car.availability %}
+    <form action="{% url 'update_availability' car.id %}" method="post">
+        {% csrf_token %}
+        <input type="submit" value="Rent Me">
+    </form>
+
+    {% else %}
+    <form action="" method="pull">
+        <input type="submit" value="Not Available ">
+    </form>
+    
+    {% endif %}
+
+    </ul>
+    <br/>
+{% endfor %}
+
+{% endblock %}

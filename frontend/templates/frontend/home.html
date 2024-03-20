@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Car Rental System</title>
+</head>
+<body>
+    <h1>Car Rental System</h1>
+    {% if user.is_authenticated %}
+        <form action="/logout/" method="get">
+            <input type="submit" value="Sign Out">
+        </form>
+        <form action="/cars/" method="get">
+            <input type="submit" value="Cars">
+        </form>
+    {% else %}
+         <form action="/register/" method="get">
+             <input type="submit" value="Sign Up">
+        </form>
+        <form action="/login/" method="get">
+            <input type="submit" value="Sign In">
+        </form>
+        <form action="/cars/" method="get">
+            <input type="submit" value="Cars">
+        </form>
+        {% endif %}
+    </div>
+
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+</body>
+</html>
