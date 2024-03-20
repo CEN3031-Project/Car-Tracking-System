@@ -51,7 +51,7 @@ def user_register(request):
     # If the request is GET, then display the form
     else:
         form = UserRegisterForm()
-    return render(request, 'register.html', {'form': form})
+    return render(request, 'account/register.html', {'form': form})
 
 
 # Handle user login with the authentication form
@@ -69,7 +69,7 @@ def user_login(request):
                 return redirect('home')
     else:
         form = AuthenticationForm()
-    return render(request, 'login.html', {'form': form})
+    return render(request, 'account/login.html', {'form': form})
 
 
 # Handle user logout when the 'signout' button is clicked
