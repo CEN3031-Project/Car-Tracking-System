@@ -5,7 +5,7 @@ from django.contrib.auth import login
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
 from django.contrib.auth import logout
-from .forms import UserRegisterForm, ReservationForm
+from .forms import UserRegisterForm, ReservationForm, User
 
 
 # Display the homepage of the website
@@ -29,7 +29,7 @@ def user_register(request):
     # If the request is GET, then display the form
     else:
         form = UserRegisterForm()
-    return render(request, 'account/register.html', {'form': form})
+    return render(request, 'frontend/register.html', {'form': form})
 
 
 # Handle user login with the authentication form
@@ -47,7 +47,7 @@ def user_login(request):
                 return redirect('home')
     else:
         form = AuthenticationForm()
-    return render(request, 'account/login.html', {'form': form})
+    return render(request, 'frontend/login.html', {'form': form})
 
 
 # Handle user logout when the 'signout' button is clicked
@@ -58,18 +58,23 @@ def user_logout(request):
 
 def make_reservation(request, id):
     car = Car.objects.get(pk=id)
-    client_account, created = ClientAccount.objects.get_or_create(user=request.user)
     if request.method == 'POST':
         form = ReservationForm(request.POST)
         if form.is_valid():
-            reservation = form.save(commit=False)
-            reservation.client = client_account
-            reservation.car = car
-            reservation.save()
-            messages.success(request, "Reservation successfully made.")
-            car.availability = not car.availability
-            car.save()
-            return redirect('home')
+            username = form.cleaned_data.get('username')
+            try:
+                user = User.objects.get(username=username)
+                client_account, created = ClientAccount.objects.get_or_create(user=user)
+                reservation = form.save(commit=False)
+                reservation.client = client_account
+                reservation.car = car
+                reservation.save()
+                car.availability = False
+                car.save()
+                messages.success(request, "Reservation successfully made.")
+                return redirect('home')
+            except User.DoesNotExist:
+                form.add_error("username", "This username is not registered with any account.")
     else:
         form = ReservationForm(initial={'car': car})
     return render(request, 'frontend/reservation.html', {'form': form, 'car': car})

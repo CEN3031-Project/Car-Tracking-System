@@ -18,7 +18,8 @@ class UserRegisterForm(UserCreationForm):
 class ReservationForm(forms.ModelForm):
     rental_date = forms.DateTimeField(required=True)
     return_date = forms.DateTimeField(required=True)
+    username = forms.CharField(required=True)
 
     class Meta:
         model = Reservation
-        fields = ['car', 'client', 'rental_date', 'return_date']
+        fields = ["car", "username", "rental_date", "return_date"]
