@@ -16,6 +16,10 @@ def home(request):
 # Handle user registration with the user register form
 # https://docs.djangoproject.com/en/5.0/topics/auth/default/
 def user_register(request):
+    # redirect to home if user is already logged in
+    if request.user.is_authenticated:
+        return redirect('home')
+    
     # If form data is being submitted, save valid form data to create a new user
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
@@ -29,11 +33,15 @@ def user_register(request):
     # If the request is GET, then display the form
     else:
         form = UserRegisterForm()
-    return render(request, 'frontend/register.html', {'form': form})
+    return render(request, 'frontend/account/register.html', {'form': form})
 
 
 # Handle user login with the authentication form
 def user_login(request):
+    # redirect to home if user is already logged in
+    if request.user.is_authenticated:
+        return redirect('home')
+    
     if request.method == 'POST':
         form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
@@ -45,9 +53,11 @@ def user_login(request):
                 return redirect('/admin/')
             else:
                 return redirect('home')
+        else:
+            return redirect('login')
     else:
         form = AuthenticationForm()
-    return render(request, 'frontend/login.html', {'form': form})
+    return render(request, 'frontend/account/login.html', {'form': form})
 
 
 # Handle user logout when the 'signout' button is clicked
