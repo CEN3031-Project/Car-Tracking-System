@@ -1,0 +1,62 @@
+{% extends '../base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" href="../../../static/css/login.css">
+{% endblock %}
+
+{% block content %}
+
+<div class="login_modal">
+<h1>Login</h1>
+<div class="form-group">
+    <form action="/login/" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Login">
+    </form>
+</div>
+<p>Don't have an account? <a href="{% url 'register' %}">Sign Up</a></p>
+</div>
+
+{% endblock %}
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../../static/css/login.css">
+    <title>Login</title>
+</head>
+<body>
+    <div class="top_bar_menu">
+        
+    </div>
+    <div class="login_modal">
+        <h1>Login</h1>
+        <form action="/login/" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Login">
+        </form>
+        <p>Don't have an account? <a href="{% url 'register' %}">Sign Up</a></p>
+
+        <h1>Login</h1>
+        <div class="username_input_wrapper">
+            <p class="input_prompt">Username</p>
+            <input class="input_field" type="text" id="username" name="username">
+        </div>
+        <div class="password_input_wrapper">
+            <p class="input_prompt">Password</p>
+            <input class="input_field" type="password" id="password" name="password">
+        </div>
+        <div>
+            <button type="button" class="login_button">Login</button><br>
+        </div>
+        <p>Need an account? <a href="{% url 'register' %}">Sign Up</a></p>
+    </div>
+</body>
+</html> -->
+
