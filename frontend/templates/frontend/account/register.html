@@ -1,0 +1,67 @@
+{% extends '../base.html' %}
+
+{% block title %}Register{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" href="../../../static/css/register.css">
+{% endblock %}
+
+{% block content %}
+<div class="register_modal">
+    <h1>Register Account</h1>
+    <div class="form-group">
+        <form action="/register/" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Register">
+        </form>
+    </div>
+    <p>Already have an account? <a href="{% url 'login' %}">Sign In</a></p>
+
+
+    <!-- <form action="/register/" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Register">
+    </form> -->
+</div>
+{% endblock %}
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../../static/css/register.css">
+    <title>Register Account</title>
+</head>
+<body>
+    <div class="register_modal">
+        <h1>Register Account</h1>
+        <form action="/register/" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Register">
+        </form>
+        <p>Already have an account? <a href="{% url 'login' %}">Sign In</a></p>
+        
+        <h1>Register Account</h1>
+        <div class="username_input_wrapper">
+            <p class="input_prompt">Username</p>
+            <input class="input_field" type="text" id="username" name="username">
+        </div>
+        <div class="password_input_wrapper">
+            <p class="input_prompt">Password</p>
+            <input class="input_field" type="password" id="password" name="password">
+        </div>
+        <div class="password_input_wrapper">
+            <p class="input_prompt">Confirm Password</p>
+            <input class="input_field" type="password" id="confrim_password" name="confrim_password">
+        </div>
+        <div>
+            <button type="button" class="register_button">Register</button><br>
+            <p>Already have an account? <a href="{% url 'login' %}">Login</a></p>
+        </div>
+    </div>
+</body>
+</html> -->
