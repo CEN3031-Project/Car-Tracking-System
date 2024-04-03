@@ -1,12 +1,11 @@
 from django.shortcuts import render, redirect
-from .models import ClientAccount
-from .models import Car
+from .models import ClientAccount, Car, Reservation
 from django.contrib.auth import login
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
 from django.contrib.auth import logout
 from .forms import UserRegisterForm, ReservationForm, User
-
+from datetime import datetime
 
 # Display the homepage of the website
 def home(request):
@@ -66,25 +65,50 @@ def user_logout(request):
     return redirect('home')
 
 
+# Check if the object is an instance of datetime
+def check_date(obj):
+    if type(obj) == datetime:
+        return obj.date()
+    else:
+        return obj
+
+
+def conflict_reservation(car, new_rental_date, new_return_date):
+    reservations = Reservation.objects.filter(car=car)
+    new_rental_date = check_date(new_rental_date)
+    new_return_date = check_date(new_return_date)
+    for reservation in reservations:
+        if new_rental_date <= reservation.return_date and new_return_date >= reservation.rental_date:
+            return True
+    return False
+
+
 def make_reservation(request, id):
     car = Car.objects.get(pk=id)
     if request.method == 'POST':
         form = ReservationForm(request.POST)
         if form.is_valid():
             username = form.cleaned_data.get('username')
-            try:
-                user = User.objects.get(username=username)
-                client_account, created = ClientAccount.objects.get_or_create(user=user)
-                reservation = form.save(commit=False)
-                reservation.client = client_account
-                reservation.car = car
-                reservation.save()
-                car.availability = False
-                car.save()
-                messages.success(request, "Reservation successfully made.")
-                return redirect('home')
-            except User.DoesNotExist:
-                form.add_error("username", "This username is not registered with any account.")
+            rental_date = form.cleaned_data.get('rental_date')
+            return_date = form.cleaned_data.get('return_date')
+            if conflict_reservation(car, rental_date, return_date):
+                form.add_error(None, "The selected dates are already reserved. Please enter different dates.")
+            else:
+                try:
+                    user = User.objects.get(username=username)
+                    client_account, created = ClientAccount.objects.get_or_create(user=user)
+                    reservation = form.save(commit=False)
+                    reservation.client = client_account
+                    reservation.car = car
+                    reservation.save()
+                    reservation_count = Reservation.objects.filter(car=car).count()
+                    if reservation_count >= 5:
+                        car.availability = False
+                        car.save()
+                    messages.success(request, "Reservation successfully made.")
+                    return redirect('home')
+                except User.DoesNotExist:
+                    form.add_error("username", "This username is not registered with any account.")
     else:
         form = ReservationForm(initial={'car': car})
     return render(request, 'frontend/reservation.html', {'form': form, 'car': car})
@@ -93,3 +117,4 @@ def make_reservation(request, id):
 def car_list(request):
     car_list = Car.objects.all()
     return render(request, 'frontend/car_list.html', {'car_list': car_list})
+
