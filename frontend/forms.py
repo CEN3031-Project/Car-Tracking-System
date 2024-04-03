@@ -21,8 +21,16 @@ class UserRegisterForm(UserCreationForm):
 
 
 class ReservationForm(forms.ModelForm):
-    rental_date = forms.DateTimeField(required=True)
-    return_date = forms.DateTimeField(required=True)
+    rental_date = forms.DateTimeField(
+        required=True,
+        help_text="Example: 01/20/2024, 9:30 AM",
+        input_formats=['%m/%d/%Y, %I:%M %p'],
+    )
+    return_date = forms.DateTimeField(
+        required=True,
+        help_text="Example: 01/27/2024, 4:30 PM",
+        input_formats=['%m/%d/%Y, %I:%M %p'],
+    )
     username = forms.CharField(required=True)
 
     class Meta:
