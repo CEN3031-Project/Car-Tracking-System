@@ -12,56 +12,46 @@
     <div class="form-group">
         <form action="/register/" method="post">
             {% csrf_token %}
-            {{ form.as_p }}
-            <input type="submit" value="Register">
+
+            <div class="input_wrapper">
+                {{ form.username.label }}
+                {{ form.username }}
+                {{ form.username.help_text }}
+                <span class="error_list">{{ form.username.errors }}</span>
+            </div>
+            <div class="input_wrapper">
+                {{ form.email.label }}
+                {{ form.email }}
+                {{ form.email.help_text }}
+                <span class="error_list">{{ form.email.errors }}</span>
+            </div>
+            <div class="input_wrapper">
+                {{ form.first_name.label }}
+                {{ form.first_name }}
+                {{ form.first_name.help_text }}
+                <span class="error_list">{{ form.errors.first_name }}</span>
+            </div>
+            <div class="input_wrapper">
+                {{ form.last_name.label }}
+                {{ form.last_name }}
+                {{ form.last_name.help_text }}
+                <span class="error_list">{{ form.errors.last_name }}</span>
+            </div>
+            <div class="input_wrapper">
+                {{ form.password1.label }}
+                {{ form.password1 }}
+                {{ form.password1.help_text }}
+                <span class="error_list">{{ form.errors.password1 }}</span>
+            </div>
+            <div class="input_wrapper">
+                {{form.password2.label }}
+                {{form.password2 }}
+                {{ form.password2.help_text }}
+                <span class="error_list">{{ form.errors.password2 }}</span>
+            </div>
+            <button type="submit" class="btn btn-primary" value="Register">Register</button>
         </form>
     </div>
     <p>Already have an account? <a href="{% url 'login' %}">Sign In</a></p>
-
-
-    <!-- <form action="/register/" method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Register">
-    </form> -->
 </div>
 {% endblock %}
-
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../../static/css/register.css">
-    <title>Register Account</title>
-</head>
-<body>
-    <div class="register_modal">
-        <h1>Register Account</h1>
-        <form action="/register/" method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <input type="submit" value="Register">
-        </form>
-        <p>Already have an account? <a href="{% url 'login' %}">Sign In</a></p>
-        
-        <h1>Register Account</h1>
-        <div class="username_input_wrapper">
-            <p class="input_prompt">Username</p>
-            <input class="input_field" type="text" id="username" name="username">
-        </div>
-        <div class="password_input_wrapper">
-            <p class="input_prompt">Password</p>
-            <input class="input_field" type="password" id="password" name="password">
-        </div>
-        <div class="password_input_wrapper">
-            <p class="input_prompt">Confirm Password</p>
-            <input class="input_field" type="password" id="confrim_password" name="confrim_password">
-        </div>
-        <div>
-            <button type="button" class="register_button">Register</button><br>
-            <p>Already have an account? <a href="{% url 'login' %}">Login</a></p>
-        </div>
-    </div>
-</body>
-</html> -->
