@@ -2,7 +2,7 @@ from typing import Any
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import Reservation, Client Account
+from .models import Reservation, ClientAccount
 
 
 # Customize the user form to include fields for an email, first name, and last name
