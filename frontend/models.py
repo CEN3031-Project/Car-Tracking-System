@@ -35,7 +35,7 @@ class Reservation(models.Model):
 
       
 class EmployeeAccount(models.Model):
-    username = models.CharField(max_length=20)
+    username = models.CharField(max_length=20, unique=True)
     password = models.CharField(max_length=20)
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
@@ -43,6 +43,27 @@ class EmployeeAccount(models.Model):
 
     def __str__(self):
         return self.first_name + ' ' + self.last_name
+
+    # https://docs.djangoproject.com/en/5.0/ref/models/instances/
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            # Create a new user object if this is a new employee
+            user = User.objects.create_user(
+                username=self.username,
+                email=self.email,
+                password=self.password,
+                first_name=self.first_name,
+                last_name=self.last_name
+            )
+        else:
+            # Update existing user details if this employee already exists
+            user = User.objects.get(username=self.username)
+            user.email = self.email
+            user.first_name = self.first_name
+            user.last_name = self.last_name
+            user.set_password(self.password)
+            user.save()
+        super().save(*args, **kwargs)
 
 
 class AdminAccount(models.Model):
