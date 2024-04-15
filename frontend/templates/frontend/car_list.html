@@ -15,22 +15,18 @@
     <li>Car location: {{ car.location }}</li>
     <li>Availability: {{ car.availability }}</li>
 
-    {% if car.availability %}
-    <form action="{% url 'reservation' car.id %}" method="post">
-        {% csrf_token %}
-        <input type="submit" value="Rent Me">
-    </form>
-
-    {% else %}
-        {% if user.is_authenticated %}
-            <form action="" method="pull">
-                <input type="submit" value="Not Available ">
+    {% if user.is_authenticated %}
+        {% if car.availability %}
+            <form action="{% url 'reservation' car.id %}" method="post">
+                {% csrf_token %}
+                <input type="submit" value="Rent Me">
             </form>
         {% else %}
-            <li>Please <a href="{% url 'login' %}">log in</a> or <a href="{% url 'register' %}">register</a> to make a reservation.</li>
+            <p>Not Available</p>
         {% endif %}
+    {% else %}
+        <li>Please <a href="{% url 'login' %}">log in</a> or <a href="{% url 'register' %}">register</a> to make a reservation.</li>
     {% endif %}
-
     </ul>
     <br/>
 {% endfor %}
