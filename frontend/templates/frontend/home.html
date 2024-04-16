@@ -9,7 +9,8 @@
 {% block content %}
 <div class="search-section">
     <div class="search-modal">
-        <div>
+        <h1>Search Cars</h1>
+        <div class="search-input-container">
             <div class="form-group">
                 <label for="id_location">Location</label>
                 
@@ -30,23 +31,23 @@
     <h2 class="section-title">Search by Car Type</h2>
     <div class="image-section">
         <div class="image-container white-text">
-            <img class="image-car" src="../../static/image/classic.png" alt="Classic Car" href="#">
+            <a href="#"><img class="image-car" src="../../static/image/classic.png" alt="Classic Car"></a>
             <div class="image-title">Classic Car</div>
         </div>
         <div class="image-container white-text">
-            <img class="image-car" src="../../static/image/sedan.png" alt="Sedan" href="#">
+            <a href="#"><img class="image-car" src="../../static/image/sedan.png" alt="Sedan"></a>
             <div class="image-title">Sedan</div>
         </div>
         <div class="image-container white-text">
-            <img class="image-car" src="../../static/image/sports.png" alt="Sports Car" href="#">
+            <a href="#"><img class="image-car" src="../../static/image/sports.png" alt="Sports Car"></a>
             <div class="image-title">Sports Car</div>
         </div>
         <div class="image-container white-text">
-            <img class="image-car" src="../../static/image/SUV.png" alt="SUV" href="#">
+            <a href="#"><img class="image-car" src="../../static/image/SUV.png" alt="SUV"></a>
             <div class="image-title">SUV</div>
         </div>
         <div class="image-container black-text">
-            <img class="image-car" src="../../static/image/truck.png" alt="Truck" href="#">
+            <a href="#"><img class="image-car" src="../../static/image/truck.png" alt="Truck"></a>
             <div class="image-title">Truck</div>
         </div>
 
@@ -56,51 +57,18 @@
     <h2 class="section-title">Search by Location</h2>
     <div class="image-section">
         <div class="image-container white-text">
-            <img class="image-location" src="../../static/image/Tampa.png" alt="Tampa" href="#">
+            <a href="#"><img class="image-location" src="../../static/image/Tampa.png" alt="Tampa"></a>
             <div class="image-title">Tampa</div>
         </div>
         <div class="image-container white-text">
-            <img class="image-location" src="../../static/image/Gainesville.png" alt="Gainesville" href="#">
+            <a href="#"><img class="image-location" src="../../static/image/Gainesville.png" alt="Gainesville"></a>
             <div class="image-title">Gainesville</div>
         </div>
         <div class="image-container white-text">
-            <img class="image-location" src="../../static/image/Orlando.png" alt="Orlando" href="#">
+            <a href="#"><img class="image-location" src="../../static/image/Orlando.png" alt="Orlando"></a>
             <div class="image-title">Orlando</div>
         </div>
     </div>
 </div>
-
-<!-- <h1>Car Rental System</h1>
-<br> -->
-<!-- {% if user.is_authenticated %}
-    <form action="/logout/" method="get">
-        <input type="submit" value="Sign Out">
-    </form>
-    <br>
-    <form action="/cars/" method="get">
-        <input type="submit" value="Cars">
-    </form>
-{% else %}
-     <form action="/register/" method="get">
-         <input type="submit" value="Sign Up">
-    </form>
-    <br>
-    <form action="/login/" method="get">
-        <input type="submit" value="Sign In">
-    </form>
-    <br>
-    <form action="/cars/" method="get">
-        <input type="submit" value="Cars">
-    </form>
-{% endif %}
-</div>
-
-{% if messages %}
-    <ul class="messages">
-    {% for message in messages %}
-        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-    {% endfor %}
-    </ul>
-{% endif %} -->
 
 {% endblock %}

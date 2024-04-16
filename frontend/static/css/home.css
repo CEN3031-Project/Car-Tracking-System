@@ -17,6 +17,17 @@
     flex-direction: right;
 }
 
+.search-input-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.form-group {
+    margin: 10px;
+    position: relative;
+    text-align: center;
+}
+
 .car-type-section .location-section {
     display: flex;
     flex-direction: column;
