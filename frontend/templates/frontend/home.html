@@ -2,16 +2,77 @@
 
 {% block title %}Car Rental System{% endblock %}
 
-<!-- {% block style %}
-<link rel="stylesheet" href="../../../static/css/login.css">
-{% endblock %} -->
+{% block style %}
+<link rel="stylesheet" href="../../../static/css/home.css">
+{% endblock %}
 
 {% block content %}
+<div class="search-section">
+    <div class="search-modal">
+        <div>
+            <div class="form-group">
+                <label for="id_location">Location</label>
+                
+            </div>
+            <div class="form-group">
+                <label for="id_rental_date">From</label>
+                
+            </div>
+            <div class="form-group">
+                <label for="id_return_date">To</label>
+                
+            </div>
 
+        </div>
+    </div>
+</div>
+<div class="car-type-section">
+    <h2 class="section-title">Search by Car Type</h2>
+    <div class="image-section">
+        <div class="image-container white-text">
+            <img class="image-car" src="../../static/image/classic.png" alt="Classic Car" href="#">
+            <div class="image-title">Classic Car</div>
+        </div>
+        <div class="image-container white-text">
+            <img class="image-car" src="../../static/image/sedan.png" alt="Sedan" href="#">
+            <div class="image-title">Sedan</div>
+        </div>
+        <div class="image-container white-text">
+            <img class="image-car" src="../../static/image/sports.png" alt="Sports Car" href="#">
+            <div class="image-title">Sports Car</div>
+        </div>
+        <div class="image-container white-text">
+            <img class="image-car" src="../../static/image/SUV.png" alt="SUV" href="#">
+            <div class="image-title">SUV</div>
+        </div>
+        <div class="image-container black-text">
+            <img class="image-car" src="../../static/image/truck.png" alt="Truck" href="#">
+            <div class="image-title">Truck</div>
+        </div>
 
-<h1>Car Rental System</h1>
-<br>
-{% if user.is_authenticated %}
+    </div>
+</div>
+<div class="location-section">
+    <h2 class="section-title">Search by Location</h2>
+    <div class="image-section">
+        <div class="image-container white-text">
+            <img class="image-location" src="../../static/image/Tampa.png" alt="Tampa" href="#">
+            <div class="image-title">Tampa</div>
+        </div>
+        <div class="image-container white-text">
+            <img class="image-location" src="../../static/image/Gainesville.png" alt="Gainesville" href="#">
+            <div class="image-title">Gainesville</div>
+        </div>
+        <div class="image-container white-text">
+            <img class="image-location" src="../../static/image/Orlando.png" alt="Orlando" href="#">
+            <div class="image-title">Orlando</div>
+        </div>
+    </div>
+</div>
+
+<!-- <h1>Car Rental System</h1>
+<br> -->
+<!-- {% if user.is_authenticated %}
     <form action="/logout/" method="get">
         <input type="submit" value="Sign Out">
     </form>
@@ -40,44 +101,6 @@
         <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
     {% endfor %}
     </ul>
-{% endif %}
+{% endif %} -->
 
 {% endblock %}
-
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Car Rental System</title>
-</head>
-<body>
-    <h1>Car Rental System</h1>
-    {% if user.is_authenticated %}
-        <form action="/logout/" method="get">
-            <input type="submit" value="Sign Out">
-        </form>
-        <form action="/cars/" method="get">
-            <input type="submit" value="Cars">
-        </form>
-    {% else %}
-         <form action="/register/" method="get">
-             <input type="submit" value="Sign Up">
-        </form>
-        <form action="/login/" method="get">
-            <input type="submit" value="Sign In">
-        </form>
-        <form action="/cars/" method="get">
-            <input type="submit" value="Cars">
-        </form>
-        {% endif %}
-    </div>
-
-{% if messages %}
-<ul class="messages">
-    {% for message in messages %}
-    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-    {% endfor %}
-</ul>
-{% endif %}
-</body>
-</html> -->
