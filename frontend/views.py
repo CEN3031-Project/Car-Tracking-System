@@ -6,6 +6,8 @@ from django.contrib import messages
 from django.contrib.auth import logout
 from .forms import UserRegisterForm, ReservationForm, User
 from datetime import datetime
+from django.db.models import Q
+
 
 # Display the homepage of the website
 def home(request):
@@ -74,12 +76,18 @@ def check_date(obj):
 
 
 def conflict_reservation(car, new_rental_date, new_return_date):
-    reservations = Reservation.objects.filter(car=car)
-    new_rental_date = check_date(new_rental_date)
-    new_return_date = check_date(new_return_date)
-    for reservation in reservations:
-        if new_rental_date <= reservation.return_date and new_return_date >= reservation.rental_date:
+    conflicting_reservations = Reservation.objects.filter(
+        car = car,
+        rental_date__lte = new_return_date,
+        return_date__gte = new_rental_date
+    )
+
+    for reservation in conflicting_reservations:
+        if (new_rental_date >= reservation.rental_date and new_rental_date <= reservation.return_date) or \
+           (new_return_date >= reservation.rental_date and new_return_date <= reservation.return_date) or \
+           (new_rental_date <= reservation.rental_date and new_return_date >= reservation.return_date):
             return True
+
     return False
 
 
@@ -91,6 +99,9 @@ def make_reservation(request, id):
             username = form.cleaned_data.get('username')
             rental_date = form.cleaned_data.get('rental_date')
             return_date = form.cleaned_data.get('return_date')
+            rental_date = rental_date.date()
+            return_date = return_date.date()
+        
             if conflict_reservation(car, rental_date, return_date):
                 form.add_error(None, "The selected dates are already reserved. Please enter different dates.")
             else:
@@ -116,5 +127,16 @@ def make_reservation(request, id):
 
 def car_list(request):
     car_list = Car.objects.all()
-    return render(request, 'frontend/car_list.html', {'car_list': car_list})
+    available_cars = []
 
+    if 'rental_date' in request.GET and 'return_date' in request.GET:
+        rental_date_str = request.GET['rental_date']
+        return_date_str = request.GET['return_date']
+        rental_date = datetime.fromisoformat(rental_date_str).date()
+        return_date = datetime.fromisoformat(return_date_str).date()
+
+        for car in car_list:
+            if not conflict_reservation(car, rental_date, return_date):
+                available_cars.append(car)
+
+    return render(request, 'frontend/car_list.html', {'car_list': car_list, 'available_cars': available_cars})
