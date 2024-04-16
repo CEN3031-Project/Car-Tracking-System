@@ -19,6 +19,7 @@ p {
     position: relative;
     text-align: left;
     top: 20px;
+    margin-bottom: 50px;
 }
 
 .input_wrapper {
@@ -33,13 +34,3 @@ p {
 .error_list {
     color: rgb(251, 63, 63);
 }
-
-/* .register_button {
-    width: 100%;
-    font-size: 16px;
-    color: #e3e3e3;
-    padding: 10px;
-    margin-top: 30px;
-    background-color: rgb(68, 68, 255);
-    border-radius: 6px;
-} */

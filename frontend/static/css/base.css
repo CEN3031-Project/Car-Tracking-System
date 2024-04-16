@@ -1,0 +1,17 @@
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+footer {
+    margin-top: auto;
+    text-align: center;
+    padding: 15px;
+    background-color: rgb(248, 249, 250);
+}
+
+.footer-message {
+    font-size: 18px;
+    margin: auto;
+}
