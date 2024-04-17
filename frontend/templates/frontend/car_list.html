@@ -2,6 +2,10 @@
 
 {% block title %}Car List{% endblock %}
 
+{% block style %} 
+<link rel="stylesheet" href="../../static/css/car_list.css">
+{% endblock %}
+
 {% block content %}
 <div class="search-section">
     <div class="search-modal">
@@ -33,51 +37,69 @@
         <button type="submit">Check Availability</button>
     </form>
 
+    <div id="available-cars-section">
+        {% if available_cars %}
+            <h2 class="section-title">Available Cars</h2>
+            {% for car in available_cars %}
+                <strong>{{ car }}</strong>
+                <div class="car-image-container">
+                    <p>{{car.image}}</p>
+                    <img src={{car.image}} alt="Car Image">
+                    
+                </div>
+                <ul>
+                    <li>Type: {{ car.type }}</li>
+                    <li>Mileage: {{ car.mileage }} miles</li>
+                    <li>Cost per day: ${{ car.cost_per_day }}</li>
+                    <li>Cost per mile: ${{ car.cost_per_mile }}</li>
+                    <li>Car location: {{ car.location }}</li>
+                </ul>
 
-    {% if available_cars %}
-        <h2>Available Cars</h2>
-        {% for car in available_cars %}
-        <strong>{{ car }}</strong>
-        <ul>
-        <li>Type: {{ car.type }}</li>
-        <li>Mileage: {{ car.mileage }} miles</li>
-        <li>Cost per day: ${{ car.cost_per_day }}</li>
-        <li>Cost per mile: ${{ car.cost_per_mile }}</li>
-        <li>Car location: {{ car.location }}</li>
+                {% if user.is_authenticated %}
+                    <form action="{% url 'reservation' car.id %}" method="post">
+                        {% csrf_token %}
+                        <input type="submit" value="Rent Me">
+                    </form>
+                {% else %}
+                    <strong>Please <a href="{% url 'login' %}">log in</a> or <a href="{% url 'register' %}">register</a> to make a reservation.</strong>
+                {% endif %}
 
-        {% if user.is_authenticated %}
-        <form action="{% url 'reservation' car.id %}" method="post">
-            {% csrf_token %}
-            <input type="submit" value="Rent Me">
-        </form>
-
+                </ul>
+                <br/>
+            {% endfor %}
         {% else %}
-        <strong>Please <a href="{% url 'login' %}">log in</a> or <a href="{% url 'register' %}">register</a> to make a reservation.</strong>
+            <h2>Available Cars</h2>
+            <h3>(There is no car available within the given time range)</h3>
+            <br>
         {% endif %}
+    </div>
+    
 
-        </ul>
-        <br/>
+    <div id="all-cars-section">
+        <h2 class="section-title">All Cars</h2>
+        {% for car in car_list %}
+            <div class="car-container">
+                <div>
+                    <h3>{{ car }}</h3>
+                </div>
+                <div class="car-desc-container">
+                    <div class="car-image-container">
+                        <img src="/media/{{car.image}}" alt="Car Image" class="car-image">      
+                    </div>
+                    <div class="car-desc-text-container">
+                        <ul>
+                            <li>Type: {{ car.type }}</li>
+                            <li>Mileage: {{ car.mileage }} miles</li>
+                            <li>Cost per day: ${{ car.cost_per_day }}</li>
+                            <li>Cost per mile: ${{ car.cost_per_mile }}</li>
+                            <li>Car location: {{ car.location }}</li>
+                            <li>Availability: {{ car.availability }}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
         {% endfor %}
-        
-    {% else %}
-    <h2>Available Cars</h2>
-    <h2>There is no car that is available within the given time range</h2>
-    <br>
-    {% endif %}
-
-    <h2>All Cars</h2>
-    {% for car in car_list %}
-        <strong>{{ car }}</strong>
-        <ul>
-        <li>Type: {{ car.type }}</li>
-        <li>Mileage: {{ car.mileage }} miles</li>
-        <li>Cost per day: ${{ car.cost_per_day }}</li>
-        <li>Cost per mile: ${{ car.cost_per_mile }}</li>
-        <li>Car location: {{ car.location }}</li>
-        <li>Availability: {{ car.availability }}</li>
-        </ul>
-        <br/>
-    {% endfor %}
+    </div>
 
 {% endblock %}
 
