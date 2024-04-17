@@ -1,0 +1,29 @@
+.section-title {
+    margin-bottom: 20px;
+}
+
+h3 {
+    font-weight: bold;
+    font-size: 25px;
+}
+
+.car-container {
+    margin-bottom: 50px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.car-desc-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.car-image-container {
+    width: 250px;
+    height: 250px;
+}
+
+.car-image {  
+    object-fit: cover;  
+    width: 250px;
+    height: 250px;
+}  

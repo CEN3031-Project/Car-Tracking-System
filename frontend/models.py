@@ -18,17 +18,17 @@ class Car(models.Model):
     cost_per_mile = models.FloatField()
     location = models.CharField(max_length=100)
     availability = models.BooleanField(default=True)
+    image = models.ImageField(upload_to="car_image", blank=True, null=True, default="car_image/default_car_icon.png")
 
     def __str__(self):
         return self.model
 
 
 class Reservation(models.Model):
-    car = models.ForeignKey(Car, on_delete=models.CASCADE)
+    car = models.ForeignKey(Car, on_delete=models.CASCADE, blank=True, null=True)
     client = models.ForeignKey(ClientAccount, on_delete=models.CASCADE)
     rental_date = models.DateField()
     return_date = models.DateField()
-    # car = models.ManyToManyField(Car)
 
     def __str__(self):
         return str(self.client) + ' ' + str(self.car)
