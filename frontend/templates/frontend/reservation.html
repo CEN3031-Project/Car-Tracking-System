@@ -6,8 +6,15 @@
 </head>
 <body>
     <h1>Make a Reservation</h1>
+
+    <!-- Get and display car type associated with what was selected -->
+    <p>Car Type: {{ car.type }}</p>
+
+    <!-- Associate the car id with this reservation and use csrf token for post methods for security purposes -->
     <form action="{% url 'reservation' car.id %}" method="post">
         {% csrf_token %}
+
+        <!-- Load in the reservation form -->
         {{ form.as_p }}
         <input type="submit" value="Submit Reservation">
     </form>

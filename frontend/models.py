@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-# Create your models here.
+# Create the models for the database with appropriate input fields
 # https://docs.djangoproject.com/en/5.0/topics/db/examples/one_to_one/
 class ClientAccount(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -41,10 +41,12 @@ class EmployeeAccount(models.Model):
     last_name = models.CharField(max_length=100)
     email = models.EmailField(max_length=100)
 
+    # Return a display of the employee's first and last name
     def __str__(self):
         return self.first_name + ' ' + self.last_name
 
     # https://docs.djangoproject.com/en/5.0/ref/models/instances/
+    # Save account as a Django User model instance so that admins can access permission changes on it
     def save(self, *args, **kwargs):
         if not self.pk:
             # Create a new user object if this is a new employee
