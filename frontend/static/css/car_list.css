@@ -26,4 +26,13 @@ h3 {
     object-fit: cover;  
     width: 250px;
     height: 250px;
+    border-radius: 15px;
 }  
+
+.car-list {
+    margin-left: 10px;
+}
+
+#all-cars-section {
+    margin-top: 30px;
+}
