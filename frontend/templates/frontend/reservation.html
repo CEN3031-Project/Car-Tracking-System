@@ -8,7 +8,7 @@
     <h1>Make a Reservation</h1>
 
     <!-- Get and display car type associated with what was selected -->
-    <p>Car Type: {{ car.type }}</p>
+    <p>Car Selected: {{ car.model }}</p>
 
     <!-- Associate the car id with this reservation and use csrf token for post methods for security purposes -->
     <form action="{% url 'reservation' car.id %}" method="post">
