@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import path
 from frontend import views
 
+# Create the appropriate url paths to associate with each html template file
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home, name='home'),

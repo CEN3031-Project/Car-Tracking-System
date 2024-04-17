@@ -39,7 +39,7 @@ def user_register(request):
 
 # Handle user login with the authentication form
 def user_login(request):
-    # redirect to home if user is already logged in
+    # Redirect to home if user is already logged in
     if request.user.is_authenticated:
         return redirect('home')
     
@@ -67,7 +67,7 @@ def user_logout(request):
     return redirect('home')
 
 
-# Check if the object is an instance of datetime
+# Check if the object is an instance of datetime and return the date
 def check_date(obj):
     if type(obj) == datetime:
         return obj.date()
@@ -75,22 +75,25 @@ def check_date(obj):
         return obj
 
 
+# Check conflicting reservations with the given new dates by comparing them with registered dates
 def conflict_reservation(car, new_rental_date, new_return_date):
+
+    # Get the reservation dates that are associated with the selected car
     conflicting_reservations = Reservation.objects.filter(
         car = car,
         rental_date__lte = new_return_date,
         return_date__gte = new_rental_date
     )
-
+    # Compare the dates to ensure any date within already taken time ranges are not allowed
     for reservation in conflicting_reservations:
         if (new_rental_date >= reservation.rental_date and new_rental_date <= reservation.return_date) or \
            (new_return_date >= reservation.rental_date and new_return_date <= reservation.return_date) or \
            (new_rental_date <= reservation.rental_date and new_return_date >= reservation.return_date):
             return True
-
     return False
 
 
+# Get a car by its id and handle reservation form data
 def make_reservation(request, id):
     car = Car.objects.get(pk=id)
     if request.method == 'POST':
@@ -101,10 +104,12 @@ def make_reservation(request, id):
             return_date = form.cleaned_data.get('return_date')
             rental_date = rental_date.date()
             return_date = return_date.date()
-        
+
+            # Check for conflicting reservations by calling the conflict_reservation method
             if conflict_reservation(car, rental_date, return_date):
                 form.add_error(None, "The selected dates are already reserved. Please enter different dates.")
             else:
+                # Otherwise, associate the reservation with the car and user
                 try:
                     user = User.objects.get(username=username)
                     client_account, created = ClientAccount.objects.get_or_create(user=user)
@@ -112,12 +117,16 @@ def make_reservation(request, id):
                     reservation.client = client_account
                     reservation.car = car
                     reservation.save()
+
+                    # Keep track of how many reservations each car has
                     reservation_count = Reservation.objects.filter(car=car).count()
                     if reservation_count >= 5:
                         car.availability = False
                         car.save()
                     messages.success(request, "Reservation successfully made.")
                     return redirect('home')
+
+                # Check to make sure the username entered is registered in the database
                 except User.DoesNotExist:
                     form.add_error("username", "This username is not registered with any account.")
     else:
