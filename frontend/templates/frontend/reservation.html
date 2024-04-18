@@ -1,22 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Make a Reservation</title>
-</head>
-<body>
-    <h1>Make a Reservation</h1>
+{% extends './base.html' %}
 
-    <!-- Get and display car type associated with what was selected -->
-    <p>Car Selected: {{ car.model }}</p>
+{% block title %}Make a Reservation{% endblock %}
 
-    <!-- Associate the car id with this reservation and use csrf token for post methods for security purposes -->
-    <form action="{% url 'reservation' car.id %}" method="post">
-        {% csrf_token %}
+{% block content %}
+<h1>Make a Reservation</h1>
 
-        <!-- Load in the reservation form -->
-        {{ form.as_p }}
-        <input type="submit" value="Submit Reservation">
-    </form>
-</body>
-</html>
+<!-- Get and display car type associated with what was selected -->
+<p>Car Selected: {{ car.model }}</p>
+
+<!-- Associate the car id with this reservation and use csrf token for post methods for security purposes -->
+<form action="{% url 'reservation' car.id %}" method="post">
+    {% csrf_token %}
+
+    <!-- Load in the reservation form -->
+    {{ form.as_p }}
+    <input type="submit" value="Submit Reservation">
+</form>
+{% endblock %}
