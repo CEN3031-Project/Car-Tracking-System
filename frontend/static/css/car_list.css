@@ -36,3 +36,12 @@ h3 {
 #all-cars-section {
     margin-top: 30px;
 }
+
+.reservation-btn-container {
+    margin-left: 20px;
+}
+
+.login-message {
+    font-weight: bold;
+    margin-left: 20px;
+}
