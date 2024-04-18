@@ -47,8 +47,7 @@
                     </div>
                     <div class="car-desc-container">
                         <div class="car-image-container">
-                            <p>{{car.image}}</p>
-                            <img src={{car.image}} alt="Car Image" class="car-image">
+                            <img src=/media/{{car.image}} alt="Car Image" class="car-image">
                         </div>
                         <div class="car-desc-text-container">
                             <ul>
@@ -59,12 +58,16 @@
                                 <li>Car location: {{ car.location }}</li>
                             </ul>
                             {% if user.is_authenticated %}
-                                <form action="{% url 'reservation' car.id %}" method="post">
-                                    {% csrf_token %}
-                                    <input type="submit" value="Rent Me">
-                                </form>
+                                <div class="reservation-btn-container">
+                                    <form action="{% url 'reservation' car.id %}" method="post">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-primary" value="Login">Rent Me</button>
+                                    </form>
+                                </div>
                             {% else %}
-                                <strong>Please <a href="{% url 'login' %}">log in</a> or <a href="{% url 'register' %}">register</a> to make a reservation.</strong>
+                                <div class="login-message">
+                                    <p>Please <a href="{% url 'login' %}">log in</a> or <a href="{% url 'register' %}">register</a> to make a reservation.</p>
+                                </div>
                             {% endif %}
                         </div>
                     </div>
@@ -94,7 +97,7 @@
                                 <li>Cost per day: ${{ car.cost_per_day }}</li>
                                 <li>Cost per mile: ${{ car.cost_per_mile }}</li>
                                 <li>Car location: {{ car.location }}</li>
-                                <li>Availability: {{ car.availability }}</li>
+                                <!-- <li>Availability: {{ car.availability }}</li> -->
                             </ul>
                         </div>
                     </div>
