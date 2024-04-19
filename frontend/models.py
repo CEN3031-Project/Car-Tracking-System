@@ -1,22 +1,24 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-# Create the models for the database with appropriate input fields
-# https://docs.djangoproject.com/en/5.0/topics/db/examples/one_to_one/
+
+# Citation: https://docs.djangoproject.com/en/5.0/topics/db/examples/one_to_one/
+# Create the client account attached to the users list in the database
 class ClientAccount(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.user.username
 
-      
+
+# Create the model for cars, including important fields with key attachments like locations
 class Car(models.Model):
     model = models.CharField(max_length=100)
     type = models.CharField(max_length=100)
     mileage = models.PositiveIntegerField()
     cost_per_day = models.FloatField()
     cost_per_mile = models.FloatField()
-    location = models.CharField(max_length=100)
+    location = models.ForeignKey('RentalLocation', on_delete=models.CASCADE, related_name='cars')
     availability = models.BooleanField(default=True)
     image = models.ImageField(upload_to="car_image", blank=True, null=True, default="car_image/default_car_icon.png")
 
@@ -24,6 +26,7 @@ class Car(models.Model):
         return self.model
 
 
+# Create the model for reservations and return the associated client and car selected
 class Reservation(models.Model):
     car = models.ForeignKey(Car, on_delete=models.CASCADE, blank=True, null=True)
     client = models.ForeignKey(ClientAccount, on_delete=models.CASCADE)
@@ -33,19 +36,21 @@ class Reservation(models.Model):
     def __str__(self):
         return str(self.client) + ' ' + str(self.car)
 
-      
+
+# Create the model for employee accounts with fields tn enter their username, pasword, location, etc.
 class EmployeeAccount(models.Model):
     username = models.CharField(max_length=20, unique=True)
     password = models.CharField(max_length=20)
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     email = models.EmailField(max_length=100)
+    location = models.ForeignKey('RentalLocation', on_delete=models.SET_NULL, null=True, blank=True)
 
     # Return a display of the employee's first and last name
     def __str__(self):
         return self.first_name + ' ' + self.last_name
 
-    # https://docs.djangoproject.com/en/5.0/ref/models/instances/
+    # Citation: https://docs.djangoproject.com/en/5.0/ref/models/instances/
     # Save account as a Django User model instance so that admins can access permission changes on it
     def save(self, *args, **kwargs):
         if not self.pk:
@@ -68,6 +73,7 @@ class EmployeeAccount(models.Model):
         super().save(*args, **kwargs)
 
 
+# Create the admin model and return their first and last name
 class AdminAccount(models.Model):
     username = models.CharField(max_length=20)
     password = models.CharField(max_length=20)
@@ -79,11 +85,9 @@ class AdminAccount(models.Model):
         return self.first_name + ' ' + self.last_name
 
 
+# Create the rental location model to enter locations and return its name
 class RentalLocation(models.Model):
     name = models.CharField(max_length=100)
-    employee = models.ForeignKey(EmployeeAccount, on_delete=models.CASCADE)
-    admin = models.ForeignKey(AdminAccount, on_delete=models.CASCADE)
-    car = models.ForeignKey(Car, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
