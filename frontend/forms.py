@@ -2,7 +2,7 @@ from typing import Any
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import Reservation, ClientAccount
+from .models import Reservation, ClientAccount, Car, EmployeeAccount, RentalLocation
 
 
 # Customize the user form to include fields for an email, first name, and last name
@@ -23,7 +23,7 @@ class UserRegisterForm(UserCreationForm):
         self.fields['password2'].widget.attrs['class'] = 'form-control'
 
 
-# Define a model form for creating or updating reservations
+# Define a model form for creating or updating reservations in the database
 class ReservationForm(forms.ModelForm):
 
     # Use the date time field for rental dates and read the input in the same format as the example
@@ -44,7 +44,7 @@ class ReservationForm(forms.ModelForm):
         fields = ["username", "rental_date", "return_date"]
 
 
-# Define a model form for creating a client account in the database
+# Define a model form for creating or updating client accounts in the database
 class ClientAccountForm(forms.ModelForm):
     username = forms.CharField(max_length=150)
     password = forms.CharField(widget=forms.PasswordInput)
@@ -72,3 +72,24 @@ class ClientAccountForm(forms.ModelForm):
         if commit:
             client_account.save()
         return client_account
+
+
+# Define a model form for creating or updating cars in the database
+class CarForm(forms.ModelForm):
+    class Meta:
+        model = Car
+
+        # Use all fields from the Car model in this form
+        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)
+        super(CarForm, self).__init__(*args, **kwargs)
+
+        # If the user is not an admin, attach the location to the employee's location
+        if user and not user.is_superuser:
+            employee = EmployeeAccount.objects.filter(user=user).first()
+            if employee and employee.location:
+                self.fields['location'].queryset = RentalLocation.objects.filter(id=employee.location.id)
+            else:
+                self.fields['location'].queryset = RentalLocation.objects.none()

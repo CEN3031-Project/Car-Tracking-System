@@ -15,7 +15,7 @@ def home(request):
 
 
 # Handle user registration with the user register form
-# https://docs.djangoproject.com/en/5.0/topics/auth/default/
+# Citation: https://docs.djangoproject.com/en/5.0/topics/auth/default/
 def user_register(request):
     # redirect to home if user is already logged in
     if request.user.is_authenticated:
@@ -28,7 +28,7 @@ def user_register(request):
             user = form.save()
             ClientAccount.objects.create(user=user)
             login(request, user)
-            # https://docs.djangoproject.com/en/5.0/ref/contrib/messages/
+            # Citation: https://docs.djangoproject.com/en/5.0/ref/contrib/messages/
             messages.success(request, "User profile successfully created.")
             return redirect('home')
     # If the request is GET, then display the form
@@ -49,7 +49,7 @@ def user_login(request):
             user = form.get_user()
             login(request, user)
             # Redirect users based on the account type
-            # https://medium.com/djangotube/django-roles-groups-and-permissions-introduction-a54d1070544
+            # Citation: https://medium.com/djangotube/django-roles-groups-and-permissions-introduction-a54d1070544
             if user.is_superuser or user.is_staff:
                 return redirect('/admin/')
             else:
@@ -134,18 +134,20 @@ def make_reservation(request, id):
     return render(request, 'frontend/reservation.html', {'form': form, 'car': car})
 
 
+# Display the list of cars and filter available cars based on selected dates.
 def car_list(request):
     car_list = Car.objects.all()
     available_cars = []
 
+    # Get the dates and convert them to datetime objects
     if 'rental_date' in request.GET and 'return_date' in request.GET:
         rental_date_str = request.GET['rental_date']
         return_date_str = request.GET['return_date']
         rental_date = datetime.fromisoformat(rental_date_str).date()
         return_date = datetime.fromisoformat(return_date_str).date()
 
+        # Find and display which cars are available during the specified period
         for car in car_list:
             if not conflict_reservation(car, rental_date, return_date):
                 available_cars.append(car)
-
     return render(request, 'frontend/car_list.html', {'car_list': car_list, 'available_cars': available_cars})
