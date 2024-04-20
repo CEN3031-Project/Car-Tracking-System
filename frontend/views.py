@@ -151,3 +151,18 @@ def car_list(request):
             if not conflict_reservation(car, rental_date, return_date):
                 available_cars.append(car)
     return render(request, 'frontend/car_list.html', {'car_list': car_list, 'available_cars': available_cars})
+
+def car_search(request):
+    template_name = 'frontend/car_list.html'
+    context = {}
+    query = request.GET.get('q')
+
+    if query:
+        cars = Car.objects.filter(model__icontains=query, availability=True).order_by('model')
+
+    else:
+        cars = []
+
+    context['cars'] = cars
+    return render(request, template_name, context)
+
