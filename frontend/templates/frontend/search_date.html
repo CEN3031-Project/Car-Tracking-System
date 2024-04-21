@@ -1,34 +1,31 @@
 {% extends './base.html' %}
 
-{% block title %}Car List{% endblock %}
+{% block title %}Search Cars by Date{% endblock %}
 
 {% block style %} 
-<link rel="stylesheet" href="../../static/css/car_list.css">
+<link rel="stylesheet" href="../../static/css/search.css">
 {% endblock %}
 
 {% block content %}
 <div class="search-section">
     <div class="search-modal">
         <h1>Search Cars</h1>
-        <div>
-            <form action="{% url 'search_cars' %}" method="get">
-                {% csrf_token %}
-                <input type="text" name="q" value="{{ query }}">
-                <button type="submit">Search</button>
-            </form>
-        </div>
+        <form method="GET">
+            <div class="search-input-container">
+                <div class="form-group date-input-wrapper">
+                    <label for="id_location">Start Date:</label>
+                    <input type="date" name="rental_date" class="form-control" autofocus id="rental_date" required>
+                    
+                </div>
+                <div class="form-group date-input-wrapper">
+                    <label for="id_rental_date">End Date:</label>
+                    <input type="date" name="return_date" class="form-control" autofocus id="return_date" required>
+                </div>
+                <button type="submit" class="btn btn-primary search-button">Check Availability</button>
+            </div>
+        </form>
     </div>
 </div>
-
-<h1>Cars</h1>
-
-<form method="GET">
-    <label for="rental_date">Start Date:</label>
-    <input type="date" id="rental_date" name="rental_date">
-    <label for="return_date">End Date:</label>
-    <input type="date" id="return_date" name="return_date">
-    <button type="submit">Check Availability</button>
-</form>
 
 <div id="available-cars-section">
     <h2 class="section-title">Available Cars</h2>
@@ -67,36 +64,18 @@
             </div>
         {% endfor %}
     {% else %}
-        <h3>(There is no car available within the given time range)</h3>
+        {% if is_searching %} 
+            <p class="message">There is no car available within the given time range</p>
+        {% else %}
+            <p class="message">Use the search tool to find the car just for you!</p>
+        {% endif %}
     {% endif %}
 </div>
 
 <div id="all-cars-section">
     <h2 class="section-title">All Cars</h2>
     <div class="car-list">
-        {% if cars %}
-            {% for car in cars %}
-                <div class="car-container">
-                    <div>
-                        <h3>{{ car }}</h3>
-                    </div>
-                    <div class="car-desc-container">
-                        <div class="car-image-container">
-                            <img src="/media/{{ car.image }}" alt="Car Image" class="car-image">
-                        </div>
-                        <div class="car-desc-text-container">
-                            <ul>
-                                <li>Type: {{ car.type }}</li>
-                                <li>Mileage: {{ car.mileage }} miles</li>
-                                <li>Cost per day: ${{ car.cost_per_day }}</li>
-                                <li>Cost per mile: ${{ car.cost_per_mile }}</li>
-                                <li>Car location: {{ car.location }}</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            {% endfor %}
-        {% else %}
+        {% if car_list %}
             {% for car in car_list %}
                 <div class="car-container">
                     <div>
@@ -118,6 +97,8 @@
                     </div>
                 </div>
             {% endfor %}
+        {% else %}
+            <h3>There is no car in the databse.</h3>
         {% endif %}
     </div>
 </div>
