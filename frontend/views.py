@@ -138,6 +138,7 @@ def make_reservation(request, id):
 def car_list(request):
     car_list = Car.objects.all()
     available_cars = []
+    isSearching = False
 
     # Get the dates and convert them to datetime objects
     if 'rental_date' in request.GET and 'return_date' in request.GET:
@@ -145,15 +146,17 @@ def car_list(request):
         return_date_str = request.GET['return_date']
         rental_date = datetime.fromisoformat(rental_date_str).date()
         return_date = datetime.fromisoformat(return_date_str).date()
+        isSearching = True
 
         # Find and display which cars are available during the specified period
         for car in car_list:
             if not conflict_reservation(car, rental_date, return_date):
                 available_cars.append(car)
-    return render(request, 'frontend/car_list.html', {'car_list': car_list, 'available_cars': available_cars})
+
+    return render(request, 'frontend/search_date.html', {'car_list': car_list, 'available_cars': available_cars, 'isSearching': isSearching,})
 
 def car_search(request):
-    template_name = 'frontend/car_list.html'
+    template_name = 'frontend/search_name.html'
     context = {}
     query = request.GET.get('q')
 
@@ -161,7 +164,7 @@ def car_search(request):
         cars = Car.objects.filter(model__icontains=query, availability=True).order_by('model')
 
     else:
-        cars = []
+        cars = Car.objects.all
 
     context['cars'] = cars
     return render(request, template_name, context)

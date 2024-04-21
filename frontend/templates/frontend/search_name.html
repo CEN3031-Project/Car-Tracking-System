@@ -1,0 +1,77 @@
+{% extends './base.html' %}
+
+{% block title %}Search Cars by Name{% endblock %}
+
+{% block style %} 
+<link rel="stylesheet" href="../../static/css/search.css">
+{% endblock %}
+
+{% block content %}
+<div class="search-section">
+    <div class="search-modal">
+        <h1>Search Cars</h1>
+        <form action="{% url 'search-cars-name' %}" method="get">
+            <div class="search-input-container">
+                {% csrf_token %}
+                <div class="form-group name-input-wrapper">
+                    <label for="id_rental_date">Car Name:</label>
+                    <input type="text" name="q" class="form-control" autofocus maxlength="150" value="{{ query }}" placeholder="ex) Tesla / Ford / BMW" required>    
+                </div>
+                <button type="submit" class="btn btn-primary search-button">Search</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="all-cars-section">
+    <h2 class="section-title">All Cars</h2>
+    <div class="car-list">
+        {% if cars %}
+            {% for car in cars %}
+                <div class="car-container">
+                    <div>
+                        <h3>{{ car }}</h3>
+                    </div>
+                    <div class="car-desc-container">
+                        <div class="car-image-container">
+                            <img src="/media/{{ car.image }}" alt="Car Image" class="car-image">
+                        </div>
+                        <div class="car-desc-text-container">
+                            <ul>
+                                <li>Type: {{ car.type }}</li>
+                                <li>Mileage: {{ car.mileage }} miles</li>
+                                <li>Cost per day: ${{ car.cost_per_day }}</li>
+                                <li>Cost per mile: ${{ car.cost_per_mile }}</li>
+                                <li>Car location: {{ car.location }}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            {% for car in car_list %}
+                <div class="car-container">
+                    <div>
+                        <h3>{{ car }}</h3>
+                    </div>
+                    <div class="car-desc-container">
+                        <div class="car-image-container">
+                            <img src="/media/{{ car.image }}" alt="Car Image" class="car-image">
+                        </div>
+                        <div class="car-desc-text-container">
+                            <ul>
+                                <li>Type: {{ car.type }}</li>
+                                <li>Mileage: {{ car.mileage }} miles</li>
+                                <li>Cost per day: ${{ car.cost_per_day }}</li>
+                                <li>Cost per mile: ${{ car.cost_per_mile }}</li>
+                                <li>Car location: {{ car.location }}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

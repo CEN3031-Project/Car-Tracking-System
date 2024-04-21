@@ -1,0 +1,97 @@
+.search-modal {
+    background-color: #fff;
+    border: 1px solid #e3e3e3;
+    border-radius: 16px;
+    box-sizing: border-box;
+    width: 100%;
+    margin-bottom: 50px;
+    padding: 48px;
+    position: relative;
+    text-align: left;
+    top: 20px;
+    flex-direction: right;
+}
+
+.search-input-container {
+    display: flex;
+    flex-direction: row;
+    margin-top: 25px;
+}
+
+.search-button {
+    height: 40px;
+    bottom: 0;
+    margin-right: 30%;
+    margin-top: 3%;
+}
+
+.date-input-wrapper {
+    margin-right: 40px;
+    width: 200px;
+}
+
+.name-input-wrapper {
+    margin-right: 40px;
+    width: 50%;
+}
+
+#available-cars-section {
+    margin: 1%;
+}
+
+#all-cars-section {
+    margin: 1%;
+}
+
+.section-title {
+    margin-bottom: 20px;
+}
+
+.message {
+    font-size: 20px;
+    color: rgb(0, 115, 238);
+}
+
+h3 {
+    font-weight: bold;
+    font-size: 25px;
+}
+
+.car-container {
+    margin-bottom: 50px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.car-desc-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.car-image-container {
+    width: 250px;
+    height: 250px;
+}
+
+.car-image {  
+    object-fit: cover;  
+    width: 250px;
+    height: 250px;
+    border-radius: 15px;
+}  
+
+.car-list {
+    margin-left: 10px;
+}
+
+#all-cars-section {
+    margin-top: 30px;
+}
+
+.reservation-btn-container {
+    margin-left: 20px;
+}
+
+.login-message {
+    font-weight: bold;
+    margin-left: 20px;
+}
