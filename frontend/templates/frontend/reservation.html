@@ -2,18 +2,56 @@
 
 {% block title %}Make a Reservation{% endblock %}
 
+{% block style %} 
+<link rel="stylesheet" href="../../static/css/reservation.css">
+{% endblock %}
+
 {% block content %}
 <h1>Make a Reservation</h1>
 
-<!-- Get and display car type associated with what was selected -->
-<p>Car Selected: {{ car.model }}</p>
+<!-- Display the selected car information -->
+<div class="car-container">
+    <div>
+        <h3>{{ car }}</h3>
+    </div>
+    <div class="car-desc-container">
+        <div class="car-image-container">
+            <img src="/media/{{ car.image }}" alt="Car Image" class="car-image">
+        </div>
+        <div class="car-desc-text-container">
+            <ul>
+                <li>Type: {{ car.type }}</li>
+                <li>Mileage: {{ car.mileage }} miles</li>
+                <li>Cost per day: ${{ car.cost_per_day }}</li>
+                <li>Cost per mile: ${{ car.cost_per_mile }}</li>
+                <li>Car location: {{ car.location }}</li>
+            </ul>
+        </div>
+    </div>
+</div>
 
-<!-- Associate the car id with this reservation and use csrf token for post methods for security purposes -->
-<form action="{% url 'reservation' car.id %}" method="post">
-    {% csrf_token %}
-
-    <!-- Load in the reservation form -->
-    {{ form.as_p }}
-    <input type="submit" value="Submit Reservation">
-</form>
+<!-- Input section -->
+<div id="input-section">
+    <div class="form-group">
+        <form action="{% url 'reservation' car.id %}" method="post">
+            {% csrf_token %}
+            <div class="input-wrapper form-group">
+                <label for="id_username" class="input-label">Username</label>
+                <input type="text" name="username" class="form-control" required id="id_username" autocomplete="username" maxlength="150" placeholder="Enter Username">
+                {{ form.username.errors }}
+            </div>
+            <div class="input-wrapper form-group">
+                <label for="id_rental_date" class="input-label">Rental Date</label>
+                <input type="date" name="rental_date" class="form-control" required id="id_rental_date">
+                {{ form.rental_date.errors }}
+            </div>
+            <div class="input-wrapper form-group">
+                <label for="id_return_date" class="input-label">Return Date</label>
+                <input type="date" name="return_date" class="form-control" required id="id_return_date">
+                {{ form.return_date.errors }}
+            </div>
+            <button type="submit" class="btn btn-primary" value="Login">Submit Reservation</button>
+        </form>
+    </div>
+</div>
 {% endblock %}
