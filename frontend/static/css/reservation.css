@@ -1,0 +1,45 @@
+.car-container {
+    margin-top: 2%;
+    margin-bottom: 4%;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.car-desc-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.car-image-container {
+    width: 250px;
+    height: 250px;
+}
+
+.car-image {  
+    object-fit: cover;  
+    width: 250px;
+    height: 250px;
+    border-radius: 15px;
+}  
+
+.car-desc-text-container {
+    font-size: 18px;
+}
+/* 
+.date-input-wrapper {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+} */
+
+/* .input-wrapper {
+    margin-bottom: 20px;
+} */
+
+.input_wrapper {
+    width: 100%;
+    font-size: 16px;
+    border: none;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 12px;
+}
