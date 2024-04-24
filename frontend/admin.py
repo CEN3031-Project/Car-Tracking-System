@@ -3,7 +3,6 @@ from .models import ClientAccount, Car, Reservation, EmployeeAccount, AdminAccou
 from .forms import ClientAccountForm, CarForm
 
 # Register all models into the admin site
-# admin.site.register(Car)
 admin.site.register(Reservation)
 admin.site.register(EmployeeAccount)
 admin.site.register(AdminAccount)
