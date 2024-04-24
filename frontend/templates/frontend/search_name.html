@@ -66,12 +66,12 @@
                                 <li>Cost per mile: ${{ car.cost_per_mile }}</li>
                                 <li>Car location: {{ car.location }}</li>
 
-                                <!––Changes car status message based on its availability––>
+                                <!-- Changes car status message based on its availability -->
                                 {% if car.availability %}
                                     <li>Car Status: Available - At {{ car.location }}</li>
                                 {% else %}
 
-                                    <!––Loops between two different reasons for an unavailable car––>
+                                    <!-- Loops between two different reasons for an unavailable car -->
                                     {% if forloop.counter|divisibleby:2 %}
                                         <li>Car Status: Not Available - Under repair</li>
                                     {% else %}
