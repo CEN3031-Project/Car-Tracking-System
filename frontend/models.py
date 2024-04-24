@@ -85,6 +85,28 @@ class AdminAccount(models.Model):
         return self.first_name + ' ' + self.last_name
 
 
+    # Save account as a Django User model instance so that admins can access permission changes on it
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            # Create a new user object if this is a new admin
+            user = User.objects.create_user(
+                username=self.username,
+                email=self.email,
+                password=self.password,
+                first_name=self.first_name,
+                last_name=self.last_name
+            )
+        else:
+            # Update existing user details if this admin already exists
+            user = User.objects.get(username=self.username)
+            user.email = self.email
+            user.first_name = self.first_name
+            user.last_name = self.last_name
+            user.set_password(self.password)
+            user.save()
+        super().save(*args, **kwargs)
+
+
 # Create the rental location model to enter locations and return its name
 class RentalLocation(models.Model):
     name = models.CharField(max_length=100)
