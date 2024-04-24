@@ -155,13 +155,15 @@ def car_list(request):
 
     return render(request, 'frontend/search_date.html', {'car_list': car_list, 'available_cars': available_cars, 'isSearching': isSearching,})
 
+# Display the list of cars and filter available cars based on searched name.
 def car_search(request):
     template_name = 'frontend/search_name.html'
     context = {}
     query = request.GET.get('q')
 
+    # Filters Car model name based on query.
     if query:
-        cars = Car.objects.filter(model__icontains=query, availability=True).order_by('model')
+        cars = Car.objects.filter(model__icontains=query).order_by('model')
 
     else:
         cars = Car.objects.all

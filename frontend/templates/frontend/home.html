@@ -7,21 +7,21 @@
 {% endblock %}
 
 {% block content %}
+<!--Allows user to search cars by date in the home screen-->
 <div class="search-section">
     <div class="search-modal">
         <h1>Search Cars</h1>
-        <form method="GET">
+        <form method="GET" action="/search-cars-date">
             <div class="search-input-container">
                 <div class="form-group date-input-wrapper">
                     <label for="id_location">Start Date:</label>
                     <input type="date" name="rental_date" class="form-control" autofocus id="rental_date" required>
-                    
                 </div>
                 <div class="form-group date-input-wrapper">
                     <label for="id_rental_date">End Date:</label>
                     <input type="date" name="return_date" class="form-control" autofocus id="return_date" required>
                 </div>
-                <button type="submit" class="btn btn-primary search-button">Search Cars</button>
+                <button type="submit" class="btn btn-primary search-button">Check Availability</button>
             </div>
         </form>
     </div>
