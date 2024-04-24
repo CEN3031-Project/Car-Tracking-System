@@ -46,6 +46,18 @@
                             <li>Cost per day: ${{ car.cost_per_day }}</li>
                             <li>Cost per mile: ${{ car.cost_per_mile }}</li>
                             <li>Car location: {{ car.location }}</li>
+                            <!--Changes car status message based on its availability-->
+                            {% if car.availability %}
+                                <li>Car Status: Available - At {{ car.location }}</li>
+                            {% else %}
+
+                                <!--Loops between two different reasons for an unavailable car-->
+                                {% if forloop.counter|divisibleby:2 %}
+                                    <li>Car Status: Not Available - Under repair</li>
+                                {% else %}
+                                    <li>Car Status: Not Available - With a customer</li>
+                                {% endif %}
+                            {% endif %}
                         </ul>
                         {% if user.is_authenticated %}
                             <div class="reservation-btn-container">
@@ -111,7 +123,7 @@
                 </div>
             {% endfor %}
         {% else %}
-            <h3>There is no car in the databse.</h3>
+            <h3>There is no car in the database.</h3>
         {% endif %}
     </div>
 </div>
