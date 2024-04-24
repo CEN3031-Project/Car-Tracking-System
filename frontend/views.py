@@ -150,7 +150,7 @@ def car_list(request):
 
         # Find and display which cars are available during the specified period
         for car in car_list:
-            if not conflict_reservation(car, rental_date, return_date):
+            if (not conflict_reservation(car, rental_date, return_date) and car.availability):
                 available_cars.append(car)
 
     return render(request, 'frontend/search_date.html', {'car_list': car_list, 'available_cars': available_cars, 'isSearching': isSearching,})
