@@ -1,6 +1,8 @@
 # 🚗 Car-Rental-System
 
-**Car Rental System** is a full-stack web application developed using the Python web framework, **Django**. 
+**Car Rental System** is a full-stack web application developed using the Python web framework, **Django**.
+
+---
 
 ### 🌟 Overview
 - **Front-End**: Dynamic forms enable users to login/register, view available vehicles, and create reservations. The UI is designed for intuitive navigation and aesthetics with **Bootstrap**.
